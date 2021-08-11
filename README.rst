@@ -18,7 +18,7 @@ This repository contains
 
 * Scripts that convert the diaggui templates for specific optics.
 
-  * `make_typeb`: convert templates for Type-B suspensions
+  * ``make_typeb``: convert templates for Type-B suspensions
 
     * usage:
 
@@ -39,4 +39,4 @@ This repository contains
     * Excitation amplitude for different stages and degree of freedoms.
 
 After generating the measurement files, it's strongly recommended to use
-`vishack<https://github.com/gw-vis/vishack>`_ for automating measurements.
+`vishack <https://github.com/gw-vis/vishack>`_ for automating measurements.

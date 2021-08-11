@@ -79,7 +79,7 @@
     <Param Name="Overlap" Type="double">0.5</Param>
     <Param Name="Window" Type="int">1</Param>
     <Param Name="RemoveDC" Type="boolean">true</Param>
-    <Param Name="AChannels" Type="int">3</Param>
+    <Param Name="AChannels" Type="int">9</Param>
     <Param Name="AverageType" Type="int">0</Param>
     <Param Name="Averages" Type="int">5</Param>
     <Param Name="BurstNoiseQuietTime_s" Type="double">0</Param>
@@ -127,24 +127,24 @@
     <Param Name="StimulusAmplitudeRange[3]" Type="double">0</Param>
     <Param Name="StimulusAmplitudeRange[4]" Type="double">0</Param>
     <Param Name="MeasurementChannelRate[0]" Type="int">0</Param>
-    <Param Name="MeasurementChannel[0]" Type="string" Unit="channel">K1:VIS-OPTICS_IP_BLEND_LVDTL_IN1</Param>
+    <Param Name="MeasurementChannel[0]" Type="string" Unit="channel">K1:VIS-OPTICS_IM_DAMP_L_IN1</Param>
     <Param Name="MeasurementActive[0]" Type="boolean">true</Param>
     <Param Name="MeasurementChannelRate[1]" Type="int">0</Param>
-    <Param Name="MeasurementChannel[1]" Type="string" Unit="channel">K1:VIS-OPTICS_IP_BLEND_LVDTT_IN1</Param>
+    <Param Name="MeasurementChannel[1]" Type="string" Unit="channel">K1:VIS-OPTICS_IM_DAMP_T_IN1</Param>
     <Param Name="MeasurementActive[1]" Type="boolean">true</Param>
     <Param Name="MeasurementChannelRate[2]" Type="int">0</Param>
-    <Param Name="MeasurementChannel[2]" Type="string" Unit="channel">K1:VIS-OPTICS_IP_BLEND_LVDTY_IN1</Param>
+    <Param Name="MeasurementChannel[2]" Type="string" Unit="channel">K1:VIS-OPTICS_IM_DAMP_V_IN1</Param>
     <Param Name="MeasurementActive[2]" Type="boolean">true</Param>
-    <Param Name="StimulusChannel[0]" Type="string" Unit="channel">K1:VIS-OPTICS_IP_TEST_DOF_EXC</Param>
+    <Param Name="StimulusChannel[0]" Type="string" Unit="channel">K1:VIS-OPTICS_IM_TEST_DOF_EXC</Param>
     <Param Name="StimulusActive[0]" Type="boolean">true</Param>
     <Param Name="StimulusReadback[0]" Type="string" Unit="channel"></Param>
     <Param Name="StimulusFilter[0]" Type="string"></Param>
     <Param Name="MeasurementChannelRate[3]" Type="int">0</Param>
-    <Param Name="MeasurementChannel[3]" Type="string" Unit="channel"></Param>
-    <Param Name="MeasurementActive[3]" Type="boolean">false</Param>
+    <Param Name="MeasurementChannel[3]" Type="string" Unit="channel">K1:VIS-OPTICS_IM_DAMP_R_IN1</Param>
+    <Param Name="MeasurementActive[3]" Type="boolean">true</Param>
     <Param Name="MeasurementChannelRate[4]" Type="int">0</Param>
-    <Param Name="MeasurementChannel[4]" Type="string" Unit="channel"></Param>
-    <Param Name="MeasurementActive[4]" Type="boolean">false</Param>
+    <Param Name="MeasurementChannel[4]" Type="string" Unit="channel">K1:VIS-OPTICS_IM_DAMP_P_IN1</Param>
+    <Param Name="MeasurementActive[4]" Type="boolean">true</Param>
     <Param Name="StimulusChannel[1]" Type="string" Unit="channel"></Param>
     <Param Name="StimulusActive[1]" Type="boolean">false</Param>
     <Param Name="StimulusReadback[1]" Type="string" Unit="channel"></Param>
@@ -162,17 +162,17 @@
     <Param Name="StimulusReadback[4]" Type="string" Unit="channel"></Param>
     <Param Name="StimulusFilter[4]" Type="string"></Param>
     <Param Name="MeasurementChannelRate[5]" Type="int">0</Param>
-    <Param Name="MeasurementChannel[5]" Type="string" Unit="channel"></Param>
-    <Param Name="MeasurementActive[5]" Type="boolean">false</Param>
+    <Param Name="MeasurementChannel[5]" Type="string" Unit="channel">K1:VIS-OPTICS_IM_DAMP_Y_IN1</Param>
+    <Param Name="MeasurementActive[5]" Type="boolean">true</Param>
     <Param Name="MeasurementChannelRate[6]" Type="int">0</Param>
-    <Param Name="MeasurementChannel[6]" Type="string" Unit="channel"></Param>
-    <Param Name="MeasurementActive[6]" Type="boolean">false</Param>
+    <Param Name="MeasurementChannel[6]" Type="string" Unit="channel">K1:VIS-OPTICS_IM_OLDAMP_L_IN1</Param>
+    <Param Name="MeasurementActive[6]" Type="boolean">true</Param>
     <Param Name="MeasurementChannelRate[7]" Type="int">0</Param>
-    <Param Name="MeasurementChannel[7]" Type="string" Unit="channel"></Param>
-    <Param Name="MeasurementActive[7]" Type="boolean">false</Param>
+    <Param Name="MeasurementChannel[7]" Type="string" Unit="channel">K1:VIS-OPTICS_IM_OLDAMP_P_IN1</Param>
+    <Param Name="MeasurementActive[7]" Type="boolean">true</Param>
     <Param Name="MeasurementChannelRate[8]" Type="int">0</Param>
-    <Param Name="MeasurementChannel[8]" Type="string" Unit="channel"></Param>
-    <Param Name="MeasurementActive[8]" Type="boolean">false</Param>
+    <Param Name="MeasurementChannel[8]" Type="string" Unit="channel">K1:VIS-OPTICS_IM_OLDAMP_Y_IN1</Param>
+    <Param Name="MeasurementActive[8]" Type="boolean">true</Param>
   </LIGO_LW>
   <LIGO_LW Name="Plot[1][0]" Type="Plot">
     <Param Name="Flag" Type="string">Settings</Param>

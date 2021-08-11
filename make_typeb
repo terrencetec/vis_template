@@ -91,42 +91,42 @@ do
   sed -i "/StimulusAmplitude\[0\]/s/>\(.*\)</>${!amp}</" $output_file
 done
 
-# ### GAS
-# for stage in F0 F1 BF
-# do
-#   input_file=${template_dir}/transfer_function/STAGE_GAS_EXC.xml
-#   output_file=${outdir}/transfer_function/${stage}_GAS_EXC.xml
+### GAS
+for stage in F0 F1 BF
+do
+  input_file=${template_dir}/transfer_function/STAGE_GAS_EXC.xml
+  output_file=${out_dir}/transfer_function/${stage}_GAS_EXC.xml
+
+  # Make diaggui file
+  sed -e "s/_STAGE_/_${stage}_/" -e "s/-OPTICS_/-${optics}_/" $input_file > $output_file
+
+  # Change configuration
+  amp=${stage}_GAS_EXC_amplitude
+  sed -i "/StimulusAmplitude\[0\]/s/>\(.*\)</>${!amp}</" $output_file
+done
+
+### Intermediate mass
+for dof in L T V R P Y
+do
+  input_file=${template_dir}/transfer_function/IM_DOF_EXC.xml
+  output_file=${out_dir}/transfer_function/IM_${dof}_EXC.xml
+
+  # Make diaggui file
+  sed -e "s/_DOF_/_${dof}_/" -e "s/-OPTICS_/-${optics}_/" $input_file > $output_file
+
+  # Change configuration
+    amp=IM_${dof}_EXC_amplitude
+    sed -i "/StimulusAmplitude\[0\]/s/>\(.*\)</>${!amp}</" $output_file
+done
 #
-#   # Make diaggui file
-#   sed "s/_STAGE_/_${stage}_" -e "s/-OPTICS_/-${optics}_/" $input_file > $output_file
-#
-#   # Change configuration
-#   amp=${stage}_GAS_EXC_amplitude
-#   sed -i "/StimulusAmplitude\[0\]/s/>\(.*\)</>${!amp}</" $output_file
-# done
-#
-# ### Intermediate mass
-# for dof in L T V R P Y
-# do
-#   input_file=${template_dir}/transfer_function/IM_DOF_EXC.xml
-#   output_file=${outdir}/transfer_function/IM_${dof}_EXC.xml
-#
-#   # Make diaggui file
-#   sed "s/_DOF_/_${dof}_/" -e "s/-OPTICS_/-${optics}_/" $input_file > $output_file
-#
-#   # Change configuration
-#     amp=IM_${dof}_EXC_amplitude
-#     sed -i "/StimulusAmplitude\[0\]/s/>\(.*\)</>${!amp}</" $output_file
-# done
-# #
-### Test mass
+## Test mass
 for dof in L P Y
 do
   input_file=${template_dir}/transfer_function/TM_DOF_EXC.xml
-  output_file=${outdir}/transfer_function/TM_${dof}_EXC.xml
+  output_file=${out_dir}/transfer_function/TM_${dof}_EXC.xml
 
   # Make diaggui file
-  sed "s/_DOF_/_${dof}_/" -e "s/-OPTICS_/-${optics}_/" $input_file > $output_file
+  sed -e "s/_DOF_/_${dof}_/" -e "s/-OPTICS_/-${optics}_/" $input_file > $output_file
 
   # Change configuration
     amp=TM_${dof}_EXC_amplitude

@@ -1,0 +1,134 @@
+#!/bin/sh
+
+function print_help {
+  printf "usage make_typeb -o outdir -O optics -c config [-h] [--args ARGS]"
+  printf "\n\n"
+  printf "Make diaggui measurement files from template for Type-B suspensions"
+  printf "\n\n"
+  printf "arguments"
+  printf "\n"
+  printf "\t --out-dir, -o \t\t Output directory, e.g. BS "
+  printf "\n"
+  printf "\t --optics, -O \t\t The optics, choose from BS, SR2, SR3, SRM."
+  printf "\n"
+  printf "\t --config, -c \t\t The configuration file."
+  printf "\n"
+  printf "optional arguments:"
+  printf "\t --template-dir, -t \t\t Template directory. Defaults to current directory."
+  printf "\n"
+  printf "\t --help, -h \t\t Print this help message."
+  printf "\n"
+  exit 0
+}
+
+template_dir=$PWD
+
+# Parse arguments
+while [ ! -z $1 ]
+do
+  if [ $1 == --out-dir ] || [ $1 == -o ];then
+    shift
+    out_dir=$1
+  elif [ $1 == --optics ] || [ $1 == -O ];then
+    shift
+    optics=$1
+  elif [ $1 == --template-dir ] || [ $1 == -t ];then
+    shift
+    template_dir=$1
+  elif [ $1 == --config ] || [ $1 == -c ];then
+    shift
+    config=$1
+  elif [ $1 == -h ] || [ $1 == --help ];then
+    print_help
+  fi
+  shift
+done
+
+if [ -z ${out_dir+x} ];then
+  printf "Please specify output directory, --out-dir or -o."
+  printf "\n"
+  printf "Try make_typeb --help for more information."
+  printf "\n"
+  exit 1
+fi
+if [ -z ${optics+x} ];then
+  printf "Please specify optics, --optics or -O."
+  printf "\n"
+  printf "Try make_typeb --help for more information."
+  printf "\n"
+  exit 1
+fi
+if [ -z ${config+x} ];then
+  printf "Please specify the configuration file, --config or -c."
+  printf "\n"
+  printf "Try make_typeb --help for more information."
+  printf "\n"
+fi
+
+
+# Parse config
+source $config
+
+# Make directory
+mkdir $out_dir
+
+# Modify template and output to the directory
+## Transfer Functions
+mkdir $out_dir/transfer_function
+
+### Inverted pendulum
+for dof in L T Y
+do
+  input_file=${template_dir}/transfer_function/IP_DOF_EXC.xml
+  output_file=${out_dir}/transfer_function/IP_${dof}_EXC.xml
+
+  # Make diaggui file
+  sed -e "s/_DOF_/_${dof}_/" -e "s/-OPTICS_/-${optics}_/" $input_file > $output_file
+
+  # Change configuration
+  ## Actuation amplitude
+  amp=IP_${dof}_EXC_amplitude
+  sed -i "/StimulusAmplitude\[0\]/s/>\(.*\)</>${!amp}</" $output_file
+done
+
+# ### GAS
+# for stage in F0 F1 BF
+# do
+#   input_file=${template_dir}/transfer_function/STAGE_GAS_EXC.xml
+#   output_file=${outdir}/transfer_function/${stage}_GAS_EXC.xml
+#
+#   # Make diaggui file
+#   sed "s/_STAGE_/_${stage}_" -e "s/-OPTICS_/-${optics}_/" $input_file > $output_file
+#
+#   # Change configuration
+#   amp=${stage}_GAS_EXC_amplitude
+#   sed -i "/StimulusAmplitude\[0\]/s/>\(.*\)</>${!amp}</" $output_file
+# done
+#
+# ### Intermediate mass
+# for dof in L T V R P Y
+# do
+#   input_file=${template_dir}/transfer_function/IM_DOF_EXC.xml
+#   output_file=${outdir}/transfer_function/IM_${dof}_EXC.xml
+#
+#   # Make diaggui file
+#   sed "s/_DOF_/_${dof}_/" -e "s/-OPTICS_/-${optics}_/" $input_file > $output_file
+#
+#   # Change configuration
+#     amp=IM_${dof}_EXC_amplitude
+#     sed -i "/StimulusAmplitude\[0\]/s/>\(.*\)</>${!amp}</" $output_file
+# done
+# #
+### Test mass
+for dof in L P Y
+do
+  input_file=${template_dir}/transfer_function/TM_DOF_EXC.xml
+  output_file=${outdir}/transfer_function/TM_${dof}_EXC.xml
+
+  # Make diaggui file
+  sed "s/_DOF_/_${dof}_/" -e "s/-OPTICS_/-${optics}_/" $input_file > $output_file
+
+  # Change configuration
+    amp=TM_${dof}_EXC_amplitude
+    sed -i "/StimulusAmplitude\[0\]/s/>\(.*\)</>${!amp}</" $output_file
+done

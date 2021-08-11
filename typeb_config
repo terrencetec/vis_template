@@ -1,0 +1,30 @@
+#!/bin/sh
+# Configuration file for Type-B.
+
+#Transfer function excitation (Gaussian noise) amplitude
+## IP
+IP_DOF_EXC_amplitude=1000
+IP_L_EXC_amplitude=$IP_DOF_EXC_amplitude
+IP_T_EXC_amplitude=$IP_DOF_EXC_amplitude
+IP_Y_EXC_amplitude=$IP_DOF_EXC_amplitude
+
+## GAS
+STAGE_GAS_EXC_amplitude=1000
+F0_GAS_EXC_amplitude=$STAGE_GAS_EXC_amplitude
+F1_GAS_EXC_amplitude=$STAGE_GAS_EXC_amplitude
+BF_GAS_EXC_amplitude=$STAGE_GAS_EXC_amplitude
+
+## IM
+IM_DOF_EXC_amplitude=1000
+IM_L_EXC_amplitude=$IM_DOF_EXC_amplitude
+IM_T_EXC_amplitude=$IM_DOF_EXC_amplitude
+IM_V_EXC_amplitude=$IM_DOF_EXC_amplitude
+IM_R_EXC_amplitude=$IM_DOF_EXC_amplitude
+IM_P_EXC_amplitude=$IM_DOF_EXC_amplitude
+IM_Y_EXC_amplitude=$IM_DOF_EXC_amplitude
+
+## TM
+TM_DOF_EXC_amplitude=1000
+TM_L_EXC_amplitude=$TM_DOF_EXC_amplitude
+TM_P_EXC_amplitude=$TM_DOF_EXC_amplitude
+TM_Y_EXC_amplitude=$TM_DOF_EXC_amplitude

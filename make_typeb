@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
-function print_help {
+print_help () {
   printf "usage make_typeb -o outdir -O optics -c config [-h] [--args ARGS]"
   printf "\n\n"
   printf "Make diaggui measurement files from template for Type-B suspensions"
@@ -89,6 +89,8 @@ do
   ## Actuation amplitude
   amp=IP_${dof}_EXC_amplitude
   sed -i "/StimulusAmplitude\[0\]/s/>\(.*\)</>${!amp}</" $output_file
+  ## Measurement Channel Rate
+  sed -i "/MeasurementChannelRate/s/>\(.*\)</>${MeasurementChannelRate}</" $output_file
 done
 
 ### GAS
@@ -103,6 +105,8 @@ do
   # Change configuration
   amp=${stage}_GAS_EXC_amplitude
   sed -i "/StimulusAmplitude\[0\]/s/>\(.*\)</>${!amp}</" $output_file
+  ## Measurement Channel Rate
+  sed -i "/MeasurementChannelRate/s/>\(.*\)</>${MeasurementChannelRate}</" $output_file
 done
 
 ### Intermediate mass
@@ -115,8 +119,10 @@ do
   sed -e "s/_DOF_/_${dof}_/" -e "s/-OPTICS_/-${optics}_/" $input_file > $output_file
 
   # Change configuration
-    amp=IM_${dof}_EXC_amplitude
-    sed -i "/StimulusAmplitude\[0\]/s/>\(.*\)</>${!amp}</" $output_file
+  amp=IM_${dof}_EXC_amplitude
+  sed -i "/StimulusAmplitude\[0\]/s/>\(.*\)</>${!amp}</" $output_file
+  ## Measurement Channel Rate
+  sed -i "/MeasurementChannelRate/s/>\(.*\)</>${MeasurementChannelRate}</" $output_file
 done
 #
 ## Test mass
@@ -129,6 +135,8 @@ do
   sed -e "s/_DOF_/_${dof}_/" -e "s/-OPTICS_/-${optics}_/" $input_file > $output_file
 
   # Change configuration
-    amp=TM_${dof}_EXC_amplitude
-    sed -i "/StimulusAmplitude\[0\]/s/>\(.*\)</>${!amp}</" $output_file
+  amp=TM_${dof}_EXC_amplitude
+  sed -i "/StimulusAmplitude\[0\]/s/>\(.*\)</>${!amp}</" $output_file
+  ## Measurement Channel Rate
+  sed -i "/MeasurementChannelRate/s/>\(.*\)</>${MeasurementChannelRate}</" $output_file
 done

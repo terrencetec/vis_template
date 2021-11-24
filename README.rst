@@ -25,17 +25,17 @@ This repository contains
 
   * ``make_typeb``: convert templates for Type-B suspensions
 
-    * example usage:
+    * example usage: Make transfer functions template
 
     .. code-block:: bash
 
-       ./make_typeb --outdir SR3 --optics SR3 --config ./typeb_config
+       ./make_typeb --outdir SR3 --optics SR3 --transfer-function --config ./typeb_config
 
     Equivalently
 
     .. code-block:: bash
 
-       ./make_typeb -o SR3 -O SR3 -c ./typeb_config
+       ./make_typeb -o SR3 -O SR3 -tf -c ./typeb_config
 
 * Configuration files for converting the templates
 
@@ -45,3 +45,23 @@ This repository contains
 
 After generating the measurement files, it's strongly recommended to use
 `vishack <https://github.com/gw-vis/vishack>`_ for automating measurements.
+
+* Help message
+
+  .. code-block:: bash
+      $ ./make_typeb -h
+      usage make_typeb -o outdir -O optics -c config [-h] [--args ARGS]
+
+      Make diaggui measurement files from template for Type-B suspensions
+
+      arguments
+         --out-dir, -o 		 Output directory, e.g. BS 
+         --optics, -O 		 The optics, choose from BS, SR2, SR3, SRM.
+         --config, -c 		 The configuration file.
+         --transfer-function, -tf 		 make transfer function template.
+         --diagonalization, -d 		 make diagonalization template.
+         --all, -a 		 make all available templates
+
+      optional arguments:
+         --template-dir, -t 		 Template directory. Defaults to current directory.
+         --help, -h 		 Print this help message.

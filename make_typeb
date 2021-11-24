@@ -13,7 +13,14 @@ print_help () {
   printf "\n"
   printf "\t --config, -c \t\t The configuration file."
   printf "\n"
+  printf "\t --transfer-function, -tf \t\t make transfer function template."
+  printf "\n"
+  printf "\t --diagonalization, -d \t\t make diagonalization template."
+  printf "\n"
+  printf "\t --all, -a \t\t make all available templates"
+  printf "\n\n"
   printf "optional arguments:"
+  printf "\n"
   printf "\t --template-dir, -t \t\t Template directory. Defaults to current directory."
   printf "\n"
   printf "\t --help, -h \t\t Print this help message."
@@ -22,6 +29,7 @@ print_help () {
 }
 
 template_dir=$PWD
+template_list=()
 
 # Parse arguments
 while [ ! -z $1 ]
@@ -38,6 +46,12 @@ do
   elif [ $1 == --config ] || [ $1 == -c ];then
     shift
     config=$1
+  elif [ $1 == --transfer-function ] || [ $1 == -tf ];then
+    template_list+=("transfer_function")
+  elif [ $1 == --diagonalization ] || [ $1 == -d ];then
+    template_list+=("diagonalization")
+  elif [ $1 == --all ] || [ $1 == -a ];then
+    template_list=("diagonalization" "transfer_function")
   elif [ $1 == -h ] || [ $1 == --help ];then
     print_help
   fi
@@ -63,6 +77,7 @@ if [ -z ${config+x} ];then
   printf "\n"
   printf "Try make_typeb --help for more information."
   printf "\n"
+  exit 1
 fi
 
 
@@ -74,69 +89,73 @@ mkdir $out_dir
 
 # Modify template and output to the directory
 ## Transfer Functions
-mkdir $out_dir/transfer_function
 
-### Inverted pendulum
-for dof in L T Y
+for template_subdir in ${template_list[@]}
 do
-  input_file=${template_dir}/transfer_function/IP_DOF_EXC.xml
-  output_file=${out_dir}/transfer_function/IP_${dof}_EXC.xml
+  mkdir $out_dir/${template_subdir}
 
-  # Make diaggui file
-  sed -e "s/_DOF_/_${dof}_/" -e "s/-OPTICS_/-${optics}_/" $input_file > $output_file
+  ### Inverted pendulum
+  for dof in L T Y
+  do
+    input_file=${template_dir}/${template_subdir}/IP_DOF_EXC.xml
+    output_file=${out_dir}/${template_subdir}/IP_${dof}_EXC.xml
 
-  # Change configuration
-  ## Actuation amplitude
-  amp=IP_${dof}_EXC_amplitude
-  sed -i "/StimulusAmplitude\[0\]/s/>\(.*\)</>${!amp}</" $output_file
-  ## Measurement Channel Rate
-  sed -i "/MeasurementChannelRate/s/>\(.*\)</>${MeasurementChannelRate}</" $output_file
-done
+    # Make diaggui file
+    sed -e "s/_DOF_/_${dof}_/" -e "s/-OPTICS_/-${optics}_/" $input_file > $output_file
 
-### GAS
-for stage in F0 F1 BF
-do
-  input_file=${template_dir}/transfer_function/STAGE_GAS_EXC.xml
-  output_file=${out_dir}/transfer_function/${stage}_GAS_EXC.xml
+    # Change configuration
+    ## Actuation amplitude
+    amp=IP_${dof}_EXC_amplitude
+    sed -i "/StimulusAmplitude\[0\]/s/>\(.*\)</>${!amp}</" $output_file
+    ## Measurement Channel Rate
+    sed -i "/MeasurementChannelRate/s/>\(.*\)</>${MeasurementChannelRate}</" $output_file
+  done
 
-  # Make diaggui file
-  sed -e "s/_STAGE_/_${stage}_/" -e "s/-OPTICS_/-${optics}_/" $input_file > $output_file
+  ### GAS
+  for stage in F0 F1 BF
+  do
+    input_file=${template_dir}/${template_subdir}/STAGE_GAS_EXC.xml
+    output_file=${out_dir}/${template_subdir}/${stage}_GAS_EXC.xml
 
-  # Change configuration
-  amp=${stage}_GAS_EXC_amplitude
-  sed -i "/StimulusAmplitude\[0\]/s/>\(.*\)</>${!amp}</" $output_file
-  ## Measurement Channel Rate
-  sed -i "/MeasurementChannelRate/s/>\(.*\)</>${MeasurementChannelRate}</" $output_file
-done
+    # Make diaggui file
+    sed -e "s/_STAGE_/_${stage}_/" -e "s/-OPTICS_/-${optics}_/" $input_file > $output_file
 
-### Intermediate mass
-for dof in L T V R P Y
-do
-  input_file=${template_dir}/transfer_function/IM_DOF_EXC.xml
-  output_file=${out_dir}/transfer_function/IM_${dof}_EXC.xml
+    # Change configuration
+    amp=${stage}_GAS_EXC_amplitude
+    sed -i "/StimulusAmplitude\[0\]/s/>\(.*\)</>${!amp}</" $output_file
+    ## Measurement Channel Rate
+    sed -i "/MeasurementChannelRate/s/>\(.*\)</>${MeasurementChannelRate}</" $output_file
+  done
 
-  # Make diaggui file
-  sed -e "s/_DOF_/_${dof}_/" -e "s/-OPTICS_/-${optics}_/" $input_file > $output_file
+  ### Intermediate mass
+  for dof in L T V R P Y
+  do
+    input_file=${template_dir}/${template_subdir}/IM_DOF_EXC.xml
+    output_file=${out_dir}/${template_subdir}/IM_${dof}_EXC.xml
 
-  # Change configuration
-  amp=IM_${dof}_EXC_amplitude
-  sed -i "/StimulusAmplitude\[0\]/s/>\(.*\)</>${!amp}</" $output_file
-  ## Measurement Channel Rate
-  sed -i "/MeasurementChannelRate/s/>\(.*\)</>${MeasurementChannelRate}</" $output_file
-done
-#
-## Test mass
-for dof in L P Y
-do
-  input_file=${template_dir}/transfer_function/TM_DOF_EXC.xml
-  output_file=${out_dir}/transfer_function/TM_${dof}_EXC.xml
+    # Make diaggui file
+    sed -e "s/_DOF_/_${dof}_/" -e "s/-OPTICS_/-${optics}_/" $input_file > $output_file
 
-  # Make diaggui file
-  sed -e "s/_DOF_/_${dof}_/" -e "s/-OPTICS_/-${optics}_/" $input_file > $output_file
+    # Change configuration
+    amp=IM_${dof}_EXC_amplitude
+    sed -i "/StimulusAmplitude\[0\]/s/>\(.*\)</>${!amp}</" $output_file
+    ## Measurement Channel Rate
+    sed -i "/MeasurementChannelRate/s/>\(.*\)</>${MeasurementChannelRate}</" $output_file
+  done
+  #
+  ## Test mass
+  for dof in L P Y
+  do
+    input_file=${template_dir}/${template_subdir}/TM_DOF_EXC.xml
+    output_file=${out_dir}/${template_subdir}/TM_${dof}_EXC.xml
 
-  # Change configuration
-  amp=TM_${dof}_EXC_amplitude
-  sed -i "/StimulusAmplitude\[0\]/s/>\(.*\)</>${!amp}</" $output_file
-  ## Measurement Channel Rate
-  sed -i "/MeasurementChannelRate/s/>\(.*\)</>${MeasurementChannelRate}</" $output_file
+    # Make diaggui file
+    sed -e "s/_DOF_/_${dof}_/" -e "s/-OPTICS_/-${optics}_/" $input_file > $output_file
+
+    # Change configuration
+    amp=TM_${dof}_EXC_amplitude
+    sed -i "/StimulusAmplitude\[0\]/s/>\(.*\)</>${!amp}</" $output_file
+    ## Measurement Channel Rate
+    sed -i "/MeasurementChannelRate/s/>\(.*\)</>${MeasurementChannelRate}</" $output_file
+  done
 done
